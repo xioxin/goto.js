@@ -35,24 +35,21 @@ var gotojs = function gotojs(unparsed) {
 	/**
 	 * function find_container
 	 *
-	 * This function finds the containing brackets that surround a
-	 * matched 'goto' call. This prevents goto's from being able to
-	 * be called into the middle of function calls (which would break
-	 * because they lacked context).
+	 * 此函数查找包含匹配的“goto”调用的包含括号。 这样可以防止goto被调用到函数调用的中间（由于缺少上下文而导致它们会被破坏）。
 	 *
-	 * @param loc       {integer} The location/index of the goto label
-	 * @param js_string {string}  This is the code block that is being modified.
+	 * @param loc       {integer} goto标签的位置/索引
+	 * @param js_string {string}  这是正在修改的代码块。
 	 * 
-	 * @returns {Object} -- This object contains the start and end points of the container
+	 * @returns {Object} -- 该对象包含容器的起点和终点
 	 */
 	this.find_container = function find_container(loc, js_string) {
-		// Allocate all variables up front -- good for minification
+		// 将所有变量分配到前面 - 有助于缩小 -- good for minification
 		var i = loc,
 		stack = -1,
 		start, end;
 		
-		// Trace backwards through each character and locate
-		// a matching bracket set
+		// 向后追溯每个字符并定位
+		// 一个匹配的括号集
 		while (i >= 0 && stack != 0) {
 			i--;
 			// Keep a parity of brackets
@@ -88,12 +85,12 @@ var gotojs = function gotojs(unparsed) {
 	/**
 	 * function filter_js
 	 *
-	 * This function does the actual replacement of the new keywords into valid javascript.
-	 * It takes special care to avoid string literals with the keywords in them.
+	 * 这个功能确实将新关键字替换成有效的javascript。 
+	 * 需要特别小心的是避免使用其中的关键字的字符串文字。
 	 *
-	 * @param js_string {string} This is the unmodified version of the code as a string
+	 * @param js_string {string} 这是作为字符串的未修改版本的代码
 	 *
-	 * @returns {string} -- the modified source that is now valid javascript
+	 * @returns {string} -- 修改后的源代码现在有效的javascript
 	 */
 	this.filter_js = function filter_js(js_string) {
 		var new_js_string = js_string,
